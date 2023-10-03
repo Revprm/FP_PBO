@@ -2,7 +2,7 @@ package Application;
 
 public class main {
     public static void main(String[] args) {
-        Game game = new Game();
+        Display display = new Display();
     }
 
 }
