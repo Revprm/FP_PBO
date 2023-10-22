@@ -1,6 +1,6 @@
 package Application;
 
-public class main {
+public class Game {
     public static void main(String[] args) {
         Display display = new Display();
     }
