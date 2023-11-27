@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="Tower Defense/src"/>
+	<classpathentry kind="src" path="/TowerDefense"/>
 	<classpathentry kind="output" path="Tower Defense/bin/production/FP_PBO"/>
 </classpath>
