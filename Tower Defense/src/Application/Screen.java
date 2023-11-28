@@ -39,7 +39,7 @@ public class Screen extends JPanel {
 	}
 
 	private void setPanelSize() {
-		size = new Dimension(640, 640);
+		size = new Dimension(640, 740);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
