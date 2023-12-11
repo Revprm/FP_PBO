@@ -4,7 +4,7 @@ import Application.Game;
 
 public class GameScene {
 	
-	private Game game;
+	public Game game;
 	
 	public GameScene(Game game) {
 		this.game = game;
