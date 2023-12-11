@@ -47,7 +47,6 @@ public class LoadSave {
 			try {
 				newLevel.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			WriteToFile(newLevel, idArr);
@@ -66,48 +65,47 @@ public class LoadSave {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void SaveLevel(String name, int[][] idArr) {
 		File levelFile = new File("res/" + name + ".txt");
-		
-		if(levelFile.exists()) {
+
+		if (levelFile.exists()) {
 			WriteToFile(levelFile, Utilities.TwoDto1DintArr(idArr));
 		} else {
 			System.out.println("File: " + name + " does not exist!");
+			return;
 		}
 	}
 
 	private static ArrayList<Integer> ReadFromFile(File file) {
 		ArrayList<Integer> list = new ArrayList<>();
-		
-		
+
 		try {
 			Scanner sc = new Scanner(file);
 
 			while (sc.hasNextLine()) {
 				list.add(Integer.parseInt(sc.nextLine()));
 			}
-			
+
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
-	
+
 	public static int[][] GetLevelData(String name) {
 		File lvlFile = new File("res/" + name + ".txt");
-		
-		if(lvlFile.exists()) {
+
+		if (lvlFile.exists()) {
 			ArrayList<Integer> list = ReadFromFile(lvlFile);
 			return Utilities.ArrayListTo2Dint(list, 20, 20);
-		}
-		else {
+		} else {
 			System.out.println("File: " + name + " does not exists! ");
 			return null;
 		}
-		
+
 	}
 
 }
