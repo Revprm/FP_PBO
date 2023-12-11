@@ -1,10 +1,5 @@
-/Application/
 /helper/
-/scenes/
-/UI/
-<<<<<<< HEAD
-/testTextFile.txt
-/text.txt
-=======
-/inputs/
->>>>>>> 2d4ddeed71b4bb8e0638cca6082bac8f74425ecd
+/new_level.txt
+/old_spriteatlas.png
+/spriteatlas.png
+/managers/
