@@ -1,6 +1,7 @@
 package scenes;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import Application.Game;
@@ -23,7 +24,7 @@ public class Editing extends GameScene implements SceneMethods {
 		loadDefaultLevel();
 		toolbar = new ToolBar(0, 640, 640, 100, this);
 	}
-	
+
 	private void loadDefaultLevel() {
 		lvl = LoadSave.GetLevelData("new_level");
 
@@ -31,14 +32,14 @@ public class Editing extends GameScene implements SceneMethods {
 
 	@Override
 	public void render(Graphics g) {
-		
+
 		drawLevel(g);
 		toolbar.draw(g);
 		drawSelectedTile(g);
 
 	}
-	
-	private void drawLevel (Graphics g) {
+
+	private void drawLevel(Graphics g) {
 		for (int y = 0; y < lvl.length; y++) {
 			for (int x = 0; x < lvl[y].length; x++) {
 				int id = lvl[y][x];
@@ -46,7 +47,7 @@ public class Editing extends GameScene implements SceneMethods {
 			}
 		}
 	}
-	
+
 	private BufferedImage getSprite(int spriteID) {
 		return game.getTileManager().getSprite(spriteID);
 	}
@@ -132,6 +133,12 @@ public class Editing extends GameScene implements SceneMethods {
 			changeTile(x, y);
 		}
 
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_R) {
+			toolbar.rotateSprite();
+		}
 	}
 
 }
