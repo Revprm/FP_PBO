@@ -31,7 +31,7 @@ public class TileManager {
 
 		int id = 0;
 		tiles.add(GRASS = new Tile(getSprite(9, 0), id++, "Grass"));
-		tiles.add(WATER = new Tile(getSprite(0, 0), id++, "Water"));
+		tiles.add(WATER = new Tile(getAniSprites(0, 0), id++, "Water"));
 
 		roadsS.add(ROAD_LR = new Tile(getSprite(8, 0), id++, "Road_LR"));
 		roadsS.add(ROAD_TB = new Tile(ImgFix.getRotImg(getSprite(8, 0), 90), id++, "TB_Road"));
@@ -55,7 +55,7 @@ public class TileManager {
 		islands.add(TR_ISLE = new Tile(ImgFix.getBuildRotImg(getImgs(0, 0, 4, 0), 90, 1), id++, "TR_Isle"));
 		islands.add(BR_ISLE = new Tile(ImgFix.getBuildRotImg(getImgs(0, 0, 4, 0), 180, 1), id++, "BR_Isle"));
 		islands.add(BL_ISLE = new Tile(ImgFix.getBuildRotImg(getImgs(0, 0, 4, 0), 270, 1), id++, "BL_Isle"));
-	
+
 		tiles.addAll(roadsS);
 		tiles.addAll(roadsC);
 		tiles.addAll(corners);
@@ -81,8 +81,26 @@ public class TileManager {
 		return tiles.get(id).getSprite();
 	}
 
+	public BufferedImage getAniSprite(int id, int animationIndex) {
+		return tiles.get(id).getSprite(animationIndex);
+	}
+
+	private BufferedImage[] getAniSprites(int xCord, int yCord) {
+
+		BufferedImage[] arr = new BufferedImage[4];
+
+		for (int i = 0; i < 4; i++) {
+			arr[i] = getSprite(xCord + i, yCord);
+		}
+		return arr;
+	}
+
 	private BufferedImage getSprite(int xCord, int yCord) {
 		return atlas.getSubimage(xCord * 32, yCord * 32, 32, 32);
+	}
+
+	public boolean isSpriteAnimation(int spriteID) {
+		return tiles.get(spriteID).isAnimation();
 	}
 
 	public ArrayList<Tile> getRoadsS() {
@@ -104,4 +122,5 @@ public class TileManager {
 	public ArrayList<Tile> getRoadsC() {
 		return roadsC;
 	}
+
 }
