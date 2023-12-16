@@ -246,9 +246,20 @@ public class ToolBar extends Bar {
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
 		bSave.resetBooleans();
+		bGrass.resetBooleans();
+		bWater.resetBooleans();
+		bPathStart.resetBooleans();
+		bPathEnd.resetBooleans();
 		for (MyButton b : map.keySet()) {
 			b.resetBooleans();
 		}
 	}
+	
+	public BufferedImage getStartPathImg() {
+		return pathStart;
+	}
 
+	public BufferedImage getEndPathImg() {
+		return pathEnd;
+	}
 }

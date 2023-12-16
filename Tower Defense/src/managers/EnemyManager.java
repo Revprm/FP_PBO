@@ -10,6 +10,7 @@ import enemies.Knight;
 import enemies.Orc;
 import enemies.Wolf;
 import helper.LoadSave;
+import objects.PathPoint;
 import scenes.Playing;
 import static Addition.Constants.Direction.*;
 import static Addition.Constants.Tiles.*;
@@ -21,14 +22,18 @@ public class EnemyManager {
 	private BufferedImage[] enemyImgs;
 	private ArrayList<Enemy> enemies = new ArrayList<>();
 	private float speed = 0.5f;
+	private PathPoint start, end;
 
-	public EnemyManager(Playing playing) {
+	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
 		this.playing = playing;
 		enemyImgs = new BufferedImage[4];
-		addEnemy(0 * 32, 14 * 32, ORC);
-		addEnemy(2 * 32, 14 * 32, BAT);
-		addEnemy(4 * 32, 9 * 32, KNIGHT);
-		addEnemy(6 * 32, 9 * 32, WOLF);
+		this.start = start;
+		this.end = end;
+		
+		addEnemy(ORC);
+		addEnemy(BAT);
+		addEnemy(KNIGHT);
+		addEnemy(WOLF);
 		loadEnemyImgs();
 	}
 
@@ -57,7 +62,7 @@ public class EnemyManager {
 		if (getTileType(newX, newY) == ROAD_TILE) {
 			e.move(speed, e.getLastDir());
 		} else if (isAtEnd(e)) {
-
+			System.out.println("Lives Lost!");
 		} else {
 			setNewDirAndMove(e);
 		}
@@ -70,6 +75,10 @@ public class EnemyManager {
 		int yCord = (int) e.getY() / 32;
 
 		fixEnemyOffsetTile(e, dir, xCord, yCord);
+		
+		if(isAtEnd(e)) {
+			return;
+		}
 
 		if (dir == LEFT || dir == RIGHT) {
 			int newY = (int) (e.getY() + getSpeedAndHeight(UP));
@@ -115,6 +124,11 @@ public class EnemyManager {
 	}
 
 	private boolean isAtEnd(Enemy e) {
+		if(e.getX() == end.getxCord() * 32) {
+			if(e.getY() == end.getyCord() * 32) {
+				return true;	
+			}
+		}
 		return false;
 	}
 
@@ -138,7 +152,10 @@ public class EnemyManager {
 		return 0;
 	}
 
-	public void addEnemy(int x, int y, int enemyType) {
+	public void addEnemy(int enemyType) {
+		int x = start.getxCord() * 32;
+		int y = start.getyCord() * 32;
+		
 		switch(enemyType) {
 		case ORC:
 			enemies.add(new Orc(x, y, 0));
