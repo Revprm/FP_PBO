@@ -1,11 +1,12 @@
 /Addition/
 /Application/
 /UI/
+/enemies/
 /helper/
 /inputs/
 /managers/
+/new_level.txt
 /objects/
-/scenes/
 /old_spriteatlas.png
+/scenes/
 /spriteatlas.png
-/enemies/

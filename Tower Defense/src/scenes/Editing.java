@@ -25,7 +25,7 @@ public class Editing extends GameScene implements SceneMethods {
 	public Editing(Game game) {
 		super(game);
 		loadDefaultLevel();
-		toolbar = new ToolBar(0, 640, 640, 100, this);
+		toolbar = new ToolBar(0, 640, 640, 160, this);
 	}
 
 	private void loadDefaultLevel() {
