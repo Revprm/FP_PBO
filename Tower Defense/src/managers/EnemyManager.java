@@ -21,7 +21,7 @@ public class EnemyManager {
 	private Playing playing;
 	private BufferedImage[] enemyImgs;
 	private ArrayList<Enemy> enemies = new ArrayList<>();
-	private float speed = 0.5f;
+//	private float speed = 0.5f;
 	private PathPoint start, end;
 
 	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
@@ -56,11 +56,11 @@ public class EnemyManager {
 			setNewDirAndMove(e);
 		}
 		
-		int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir()));
-		int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir()));
+		int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
+		int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
 
 		if (getTileType(newX, newY) == ROAD_TILE) {
-			e.move(speed, e.getLastDir());
+			e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
 		} else if (isAtEnd(e)) {
 			System.out.println("Lives Lost!");
 		} else {
@@ -81,18 +81,18 @@ public class EnemyManager {
 		}
 
 		if (dir == LEFT || dir == RIGHT) {
-			int newY = (int) (e.getY() + getSpeedAndHeight(UP));
+			int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
 			if (getTileType((int) e.getX(), newY) == ROAD_TILE) {
-				e.move(speed, UP);
+				e.move(GetSpeed(e.getEnemyType()), UP);
 			} else {
-				e.move(speed, DOWN);
+				e.move(GetSpeed(e.getEnemyType()), DOWN);
 			}
 		} else {
-			int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT));
+			int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
 			if (getTileType(newX, (int) e.getY()) == ROAD_TILE) {
-				e.move(speed, RIGHT);
+				e.move(GetSpeed(e.getEnemyType()), RIGHT);
 			} else {
-				e.move(speed, LEFT);
+				e.move(GetSpeed(e.getEnemyType()), LEFT);
 			}
 		}
 
@@ -136,19 +136,19 @@ public class EnemyManager {
 		return playing.getTileType(x, y);
 	}
 
-	private float getSpeedAndHeight(int dir) {
+	private float getSpeedAndHeight(int dir, int enemyType) {
 		if (dir == UP)
-			return -speed;
+			return -GetSpeed(enemyType);
 		else if (dir == DOWN)
-			return speed + 32;
+			return GetSpeed(enemyType) + 32;
 		return 0;
 	}
 
-	private float getSpeedAndWidth(int dir) {
+	private float getSpeedAndWidth(int dir, int enemyType) {
 		if (dir == LEFT)
-			return -speed;
+			return -GetSpeed(enemyType);
 		else if (dir == RIGHT)
-			return speed + 32;
+			return GetSpeed(enemyType) + 32;
 		return 0;
 	}
 
