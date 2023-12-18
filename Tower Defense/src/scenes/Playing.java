@@ -68,7 +68,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 	private void drawSelectedTower(Graphics g) {
-		if(selectedTower != null){
+		if (selectedTower != null) {
 			g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
 		}
 	}
@@ -104,15 +104,25 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		if (y >= 640) {
 			actionBar.mouseClicked(x, y);
-		}
-		else{
-			if(selectedTower != null){
-				if(isTileGrass(mouseX, mouseY)){
-					towerManager.addTower(selectedTower, mouseX, mouseY);
-					selectedTower = null;
+		} else {
+			if (selectedTower != null) {
+				if (isTileGrass(mouseX, mouseY)) {
+					if (getTowerAt(mouseX, mouseY) == null) {
+						towerManager.addTower(selectedTower, mouseX, mouseY);
+						selectedTower = null;
+					}
 				}
+			} else {
+				// get tower if exists on xy
+				Tower t = getTowerAt(mouseX, mouseY);
+				actionBar.displayTower(t);
+				
 			}
 		}
+	}
+
+	private Tower getTowerAt(int x, int y) {
+		return towerManager.getTowerAt(x, y);
 	}
 
 	private boolean isTileGrass(int x, int y) {
