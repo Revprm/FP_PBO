@@ -1,8 +1,8 @@
 package objects;
 
 public class Tower {
-	private int x, y, id, towerType;
-	private float dmg, range, cooldown;
+	private int x, y, id, towerType, cdTick, dmg;
+	private float range, cooldown;
 
 	public Tower(int x, int y, int id, int towerType) {
 		this.x = x;
@@ -14,8 +14,12 @@ public class Tower {
 		setDefaultCooldown();
 	}
 
+	public void update(){
+		cdTick++;
+	}
+
 	private void setDefaultCooldown() {
-		dmg = Addition.Constants.Towers.GetDefaultCooldown(towerType);
+		cooldown = Addition.Constants.Towers.GetDefaultCooldown(towerType);
 	}
 
 	private void setDefaultRange() {
@@ -23,7 +27,15 @@ public class Tower {
 	}
 
 	private void setDefaultDmg() {
-		cooldown = Addition.Constants.Towers.GetStartDmg(towerType);
+		dmg = Addition.Constants.Towers.GetStartDmg(towerType);
+	}
+
+	public boolean isCooldownOver() {
+		return cdTick >= cooldown;
+	}
+
+	public void resetCooldown() {
+		cdTick = 0;
 	}
 
 	public int getX() {
@@ -58,7 +70,7 @@ public class Tower {
 		this.towerType = towerType;
 	}
 
-	public float getDmg() {
+	public int getDmg() {
 		return dmg;
 	}
 

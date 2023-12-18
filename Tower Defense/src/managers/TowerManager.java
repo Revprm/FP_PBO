@@ -26,7 +26,7 @@ public class TowerManager {
 		BufferedImage atlas = LoadSave.getSpriteAtlas();
 		towerImgs = new BufferedImage[3];
 		for (int i = 0; i < 3; i++) {
-			towerImgs[i] = atlas.getSubimage((4 + i) * 32, 32, 32, 32);
+			towerImgs[i] = atlas.getSubimage((13 + i) * 32, 0, 32, 32);
 		}
 	}
 
@@ -35,21 +35,26 @@ public class TowerManager {
 	}
 
 	public void update() {
-		attackEnemyIfClose();
+		for (Tower t : towers) {
+			t.update();
+			attackEnemyIfClose(t);
+		}
 	}
 
-	private void attackEnemyIfClose() {
-		for (Tower t : towers) {
-			for (Enemy e : playing.getEnemyManager().getEnemies()) {
-				if (e.isAlive()) {
-					if (isEnemyInRange(t, e)) {
-						e.hurt(1);
-					} else {
-
+	private void attackEnemyIfClose(Tower t) {
+		for (Enemy e : playing.getEnemyManager().getEnemies()) {
+			if (e.isAlive()) {
+				if (isEnemyInRange(t, e)) {
+					if (t.isCooldownOver()) {
+						playing.shootEnemy(t, e);
+						t.resetCooldown();
 					}
+				} else {
+
 				}
 			}
 		}
+
 	}
 
 	private boolean isEnemyInRange(Tower t, Enemy e) {

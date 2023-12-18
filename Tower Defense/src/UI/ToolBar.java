@@ -35,8 +35,8 @@ public class ToolBar extends Bar {
 	}
 	
 	private void initPathImgs() {
-		pathStart = LoadSave.getSpriteAtlas().getSubimage(7*32, 2*32, 32, 32);
-		pathEnd = LoadSave.getSpriteAtlas().getSubimage(8*32, 2*32, 32, 32);
+		pathStart = LoadSave.getSpriteAtlas().getSubimage(20*32, 0, 32, 32);
+		pathEnd = LoadSave.getSpriteAtlas().getSubimage(19*32, 0, 32, 32);
 	}
 	
 	private void initButtons() {

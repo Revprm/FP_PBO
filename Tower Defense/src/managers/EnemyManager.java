@@ -5,11 +5,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import enemies.Bat;
+import enemies.Zombie;
 import enemies.Enemy;
-import enemies.Knight;
-import enemies.Orc;
-import enemies.Wolf;
+import enemies.Slime;
+import enemies.Skeleton;
 import helper.LoadSave;
 import objects.PathPoint;
 import scenes.Playing;
@@ -32,18 +31,17 @@ public class EnemyManager {
 		this.start = start;
 		this.end = end;
 
-		addEnemy(ORC);
-		addEnemy(BAT);
-		addEnemy(KNIGHT);
-		addEnemy(WOLF);
+		addEnemy(SKELETON);
+		addEnemy(SLIME);
+		addEnemy(ZOMBIE);
 		loadEnemyImgs();
 	}
 
 	private void loadEnemyImgs() {
 		BufferedImage atlas = LoadSave.getSpriteAtlas();
 
-		for (int i = 0; i < 4; i++) {
-			enemyImgs[i] = atlas.getSubimage(i * 32, 32, 32, 32);
+		for (int i = 0; i < 3; i++) {
+			enemyImgs[i] = atlas.getSubimage((i + 10) * 32, 0, 32, 32);
 		}
 	}
 
@@ -153,17 +151,14 @@ public class EnemyManager {
 		int y = start.getyCord() * 32;
 
 		switch (enemyType) {
-			case ORC:
-				enemies.add(new Orc(x, y, 0));
+			case SKELETON:
+				enemies.add(new Skeleton(x, y, 0));
 				break;
-			case BAT:
-				enemies.add(new Bat(x, y, 0));
+			case SLIME:
+				enemies.add(new Zombie(x, y, 0));
 				break;
-			case KNIGHT:
-				enemies.add(new Knight(x, y, 0));
-				break;
-			case WOLF:
-				enemies.add(new Wolf(x, y, 0));
+			case ZOMBIE:
+				enemies.add(new Slime(x, y, 0));
 				break;
 		}
 	}

@@ -21,27 +21,27 @@ public class Constants {
 	}
 
 	public static class Towers {
-		public static final int CANNON = 0;
-		public static final int ARCHER = 1;
+		public static final int ARCHER = 0;
+		public static final int CANNON = 1;
 		public static final int WIZARD = 2;
 
 		public static String GetName(int towerType) {
 			switch (towerType) {
-				case CANNON:
-					return "Cannon";
 				case ARCHER:
 					return "Archer";
+				case CANNON:
+					return "Cannon";
 				case WIZARD:
 					return "Wizard";
 			}
 			return "";
 		}
 
-		public static float GetStartDmg(int towerType) {
+		public static int GetStartDmg(int towerType) {
 			switch (towerType) {
-				case CANNON:
-					return 25;
 				case ARCHER:
+					return 25;
+				case CANNON:
 					return 15;
 				case WIZARD:
 					return 5;
@@ -51,9 +51,9 @@ public class Constants {
 
 		public static float GetDefaultRange(int towerType) {
 			switch (towerType) {
-				case CANNON:
-					return 100;
 				case ARCHER:
+					return 100;
+				case CANNON:
 					return 100;
 				case WIZARD:
 					return 100;
@@ -63,9 +63,9 @@ public class Constants {
 
 		public static float GetDefaultCooldown(int towerType) {
 			switch (towerType) {
-				case CANNON:
-					return 10;
 				case ARCHER:
+					return 10;
+				case CANNON:
 					return 10;
 				case WIZARD:
 					return 10;
@@ -84,35 +84,30 @@ public class Constants {
 
 	public static class Enemies {
 
-		public static final int ORC = 0;
-		public static final int BAT = 1;
-		public static final int KNIGHT = 2;
-		public static final int WOLF = 3;
+		public static final int SKELETON = 0;
+		public static final int SLIME = 1;
+		public static final int ZOMBIE = 2;
 
 		public static float GetSpeed(int enemyType) {
 			switch (enemyType) {
-				case ORC:
+				case SKELETON:
 					return 0.5f;
-				case BAT:
+				case SLIME:
 					return 0.65f;
-				case KNIGHT:
+				case ZOMBIE:
 					return 0.3f;
-				case WOLF:
-					return 0.75f;
 			}
 			return 0;
 		}
 
 		public static int GetStartHealth(int enemyType) {
 			switch (enemyType) {
-				case ORC:
+				case SKELETON:
 					return 100;
-				case BAT:
+				case SLIME:
 					return 60;
-				case KNIGHT:
+				case ZOMBIE:
 					return 250;
-				case WOLF:
-					return 85;
 			}
 			return 0;
 		}
