@@ -1,5 +1,6 @@
 package managers;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,15 +22,16 @@ public class EnemyManager {
 	private Playing playing;
 	private BufferedImage[] enemyImgs;
 	private ArrayList<Enemy> enemies = new ArrayList<>();
-//	private float speed = 0.5f;
+	// private float speed = 0.5f;
 	private PathPoint start, end;
+	private int HPBarWidth = 20;
 
 	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
 		this.playing = playing;
 		enemyImgs = new BufferedImage[4];
 		this.start = start;
 		this.end = end;
-		
+
 		addEnemy(ORC);
 		addEnemy(BAT);
 		addEnemy(KNIGHT);
@@ -39,8 +41,8 @@ public class EnemyManager {
 
 	private void loadEnemyImgs() {
 		BufferedImage atlas = LoadSave.getSpriteAtlas();
-		
-		for(int i = 0; i < 4; i++) {
+
+		for (int i = 0; i < 4; i++) {
 			enemyImgs[i] = atlas.getSubimage(i * 32, 32, 32, 32);
 		}
 	}
@@ -52,10 +54,10 @@ public class EnemyManager {
 	}
 
 	public void updateEnemyMove(Enemy e) {
-		if(e.getLastDir() == -1) {
+		if (e.getLastDir() == -1) {
 			setNewDirAndMove(e);
 		}
-		
+
 		int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
 		int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
 
@@ -75,8 +77,8 @@ public class EnemyManager {
 		int yCord = (int) e.getY() / 32;
 
 		fixEnemyOffsetTile(e, dir, xCord, yCord);
-		
-		if(isAtEnd(e)) {
+
+		if (isAtEnd(e)) {
 			return;
 		}
 
@@ -101,32 +103,24 @@ public class EnemyManager {
 	private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
 
 		switch (dir) {
-//		case LEFT:
-//			if(xCord > 0)
-//				xCord--;
-//			break;
-//		case UP:
-//			if(yCord > 0)
-//				yCord--;
-//			break;
-		case RIGHT:
-			if(xCord < 19)
-				xCord++;
-			break;
-		case DOWN:
-			if(yCord < 19) 
-				yCord++;
-			break;
+			case RIGHT:
+				if (xCord < 19)
+					xCord++;
+				break;
+			case DOWN:
+				if (yCord < 19)
+					yCord++;
+				break;
 		}
-		
+
 		e.setPos(xCord * 32, yCord * 32);
 
 	}
 
 	private boolean isAtEnd(Enemy e) {
-		if(e.getX() == end.getxCord() * 32) {
-			if(e.getY() == end.getyCord() * 32) {
-				return true;	
+		if (e.getX() == end.getxCord() * 32) {
+			if (e.getY() == end.getyCord() * 32) {
+				return true;
 			}
 		}
 		return false;
@@ -155,27 +149,38 @@ public class EnemyManager {
 	public void addEnemy(int enemyType) {
 		int x = start.getxCord() * 32;
 		int y = start.getyCord() * 32;
-		
-		switch(enemyType) {
-		case ORC:
-			enemies.add(new Orc(x, y, 0));
-			break;
-		case BAT:
-			enemies.add(new Bat(x, y, 0));
-			break;
-		case KNIGHT:
-			enemies.add(new Knight(x, y, 0));
-			break;
-		case WOLF:
-			enemies.add(new Wolf(x, y, 0));
-			break;
+
+		switch (enemyType) {
+			case ORC:
+				enemies.add(new Orc(x, y, 0));
+				break;
+			case BAT:
+				enemies.add(new Bat(x, y, 0));
+				break;
+			case KNIGHT:
+				enemies.add(new Knight(x, y, 0));
+				break;
+			case WOLF:
+				enemies.add(new Wolf(x, y, 0));
+				break;
 		}
 	}
 
 	public void draw(Graphics g) {
-		for (Enemy e : enemies)
+		for (Enemy e : enemies) {
 			drawEnemy(e, g);
+			drawHealthBar(e, g);
+		}
 
+	}
+
+	private void drawHealthBar(Enemy e, Graphics g) {
+		g.setColor(Color.red);
+		g.fillRect((int) e.getX() + 16 - (getNewBarWidth(e) / 2), (int) e.getY() - 10, getNewBarWidth(e), 3);
+	}
+
+	private int getNewBarWidth(Enemy e) {
+		return (int) (HPBarWidth * e.getHealthBarFloat());
 	}
 
 	private void drawEnemy(Enemy e, Graphics g) {

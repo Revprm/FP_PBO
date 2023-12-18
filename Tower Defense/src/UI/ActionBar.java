@@ -13,7 +13,6 @@ import objects.Tower;
 import scenes.Playing;
 import static Addition.Constants.Towers;
 
-
 public class ActionBar extends Bar {
 
 	private int x, y, width, height;
@@ -40,7 +39,7 @@ public class ActionBar extends Bar {
 		int xStart = 110;
 		int yStart = 650;
 		int xOffset = (int) (w * 1.1f);
-		for(int i = 0; i < towerButtons.length; i++) {
+		for (int i = 0; i < towerButtons.length; i++) {
 			towerButtons[i] = new MyButton("", xStart + xOffset * i, yStart, w, h, i);
 		}
 
@@ -48,7 +47,7 @@ public class ActionBar extends Bar {
 
 	private void drawButtons(Graphics g) {
 		bMenu.draw(g);
-		for(MyButton b : towerButtons) {
+		for (MyButton b : towerButtons) {
 			g.setColor(Color.gray);
 			g.fillRect(b.x, b.y, b.width, b.height);
 			g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
@@ -64,19 +63,27 @@ public class ActionBar extends Bar {
 	}
 
 	private void drawDisplayedTower(Graphics g) {
-		if(displayedTower != null){
+		if (displayedTower != null) {
 			g.setColor(Color.gray);
 			g.fillRect(410, 645, 220, 85);
 			g.setColor(Color.black);
 			g.drawRect(410, 645, 220, 85);
 			g.drawRect(420, 650, 50, 50);
-			g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 420, 650, 50, 50, null);
+			g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 420, 650, 50, 50,
+					null);
 			g.setFont(new Font("LucidaSans", Font.BOLD, 15));
 			g.drawString("" + Towers.GetName(displayedTower.getTowerType()), 490, 660);
 			g.drawString("ID: " + displayedTower.getId(), 490, 675);
-		
 			drawDisplayedTowerBorder(g);
+			drawDisplayedTowerRange(g);
 		}
+	}
+
+	private void drawDisplayedTowerRange(Graphics g) {
+		g.setColor(Color.white);
+		g.drawOval(displayedTower.getX() + 16 - (int) displayedTower.getRange() / 2,
+				displayedTower.getY() + 16 - (int) displayedTower.getRange() / 2, (int) displayedTower.getRange(),
+				(int) displayedTower.getRange());
 	}
 
 	private void drawDisplayedTowerBorder(Graphics g) {
@@ -87,9 +94,9 @@ public class ActionBar extends Bar {
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y))
 			SetGameState(MENU);
-		else{
-			for(MyButton b : towerButtons) {
-				if(b.getBounds().contains(x, y)) {
+		else {
+			for (MyButton b : towerButtons) {
+				if (b.getBounds().contains(x, y)) {
 					selectedTower = new Tower(0, 0, -1, b.getId());
 					playing.setSelectedTower(selectedTower);
 					return;
@@ -101,14 +108,14 @@ public class ActionBar extends Bar {
 
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
-		for(MyButton b : towerButtons) {
+		for (MyButton b : towerButtons) {
 			b.setMouseOver(false);
 		}
 		if (bMenu.getBounds().contains(x, y))
 			bMenu.setMouseOver(true);
-		else{
-			for(MyButton b : towerButtons) {
-				if(b.getBounds().contains(x, y)) {
+		else {
+			for (MyButton b : towerButtons) {
+				if (b.getBounds().contains(x, y)) {
 					b.setMouseOver(true);
 				}
 			}
@@ -118,9 +125,9 @@ public class ActionBar extends Bar {
 	public void mousePressed(int x, int y) {
 		if (bMenu.getBounds().contains(x, y))
 			bMenu.setMousePressed(true);
-		else{
-			for(MyButton b : towerButtons) {
-				if(b.getBounds().contains(x, y)) {
+		else {
+			for (MyButton b : towerButtons) {
+				if (b.getBounds().contains(x, y)) {
 					b.setMousePressed(true);
 					return;
 				}
@@ -130,7 +137,7 @@ public class ActionBar extends Bar {
 
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
-		for(MyButton b : towerButtons) {
+		for (MyButton b : towerButtons) {
 			b.resetBooleans();
 		}
 	}

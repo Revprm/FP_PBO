@@ -5,12 +5,13 @@ import static Addition.Constants.Direction.*;
 
 public abstract class Enemy {
 
-	private float x, y;
-	private Rectangle bounds;
-	private int health;
-	private int ID;
-	private int enemyType;
-	private int lastDir;
+	protected float x, y;
+	protected Rectangle bounds;
+	protected int health;
+	protected int maxHealth;
+	protected int ID;
+	protected int enemyType;
+	protected int lastDir;
 
 	public Enemy(float x, float y, int ID, int enemyType) {
 		this.x = x;
@@ -19,33 +20,39 @@ public abstract class Enemy {
 		this.enemyType = enemyType;
 		bounds = new Rectangle((int) x, (int) y, 32, 32);
 		lastDir = -1;
+		setStartHealth();
 	}
 
-	protected void setStartHealth(){
+	protected void setStartHealth() {
 		health = Addition.Constants.Enemies.GetStartHealth(enemyType);
+		maxHealth = health;
 	}
 
 	public void move(float speed, int dir) {
 		lastDir = dir;
 		switch (dir) {
-		case LEFT:
-			this.x -= speed;
-			break;
-		case UP:
-			this.y -= speed;
-			break;
-		case RIGHT:
-			this.x += speed;
-			break;
-		case DOWN:
-			this.x += speed;
-			break;
+			case LEFT:
+				this.x -= speed;
+				break;
+			case UP:
+				this.y -= speed;
+				break;
+			case RIGHT:
+				this.x += speed;
+				break;
+			case DOWN:
+				this.x += speed;
+				break;
 		}
 	}
-	
+
 	public void setPos(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public float getHealthBarFloat() {
+		return health / (float) maxHealth;
 	}
 
 	public float getX() {
