@@ -123,24 +123,6 @@ public class ToolBar extends Bar {
 
 	}
 
-	private void drawButtonFeedback(Graphics g, MyButton b) {
-		// Mouseover
-		if (b.isMouseOver()) {
-			g.setColor(Color.WHITE);
-		} else {
-			g.setColor(Color.BLACK);
-		}
-
-		// Border
-		g.drawRect(b.x, b.y, b.width, b.height);
-
-		// MousePressed
-		if (b.isMousePressed()) {
-			g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
-			g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
-		}
-	}
-
 	private void drawSelectedTile(Graphics g) {
 		if (selectedTile != null) {
 			g.drawImage(selectedTile.getSprite(), 550, 650, 50, 50, null);
