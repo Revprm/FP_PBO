@@ -2,7 +2,9 @@ package scenes;
 
 import static Addition.Constants.Tiles.GRASS_TILE;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -65,6 +67,12 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager.draw(g);
 		towerManager.draw(g);
 		drawSelectedTower(g);
+		drawHighLight(g);
+	}
+
+	private void drawHighLight(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.drawRect(mouseX, mouseY, 32, 32);
 	}
 
 	private void drawSelectedTower(Graphics g) {
@@ -116,7 +124,7 @@ public class Playing extends GameScene implements SceneMethods {
 				// get tower if exists on xy
 				Tower t = getTowerAt(mouseX, mouseY);
 				actionBar.displayTower(t);
-				
+
 			}
 		}
 	}
@@ -159,6 +167,12 @@ public class Playing extends GameScene implements SceneMethods {
 
 	public TowerManager getTowerManager() {
 		return towerManager;
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			selectedTower = null;
+		}
 	}
 
 }

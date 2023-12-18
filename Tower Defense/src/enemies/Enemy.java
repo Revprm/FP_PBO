@@ -21,6 +21,10 @@ public abstract class Enemy {
 		lastDir = -1;
 	}
 
+	protected void setStartHealth(){
+		health = Addition.Constants.Enemies.GetStartHealth(enemyType);
+	}
+
 	public void move(float speed, int dir) {
 		lastDir = dir;
 		switch (dir) {
