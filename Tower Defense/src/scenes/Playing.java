@@ -169,10 +169,15 @@ public class Playing extends GameScene implements SceneMethods {
 		return towerManager;
 	}
 
+	public EnemyManager getEnemyManager(){
+		return enemyManager;
+	}
+
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			selectedTower = null;
 		}
 	}
 
+	
 }
