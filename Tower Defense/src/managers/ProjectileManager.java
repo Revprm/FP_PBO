@@ -1,6 +1,7 @@
 package managers;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -36,15 +37,14 @@ public class ProjectileManager {
     public void newProjectile(Tower t, Enemy e){
         int type = getProjectileType(t);
         
-        int xDist = (int)Math.abs(t.getX() - e.getX());
-        int yDist = (int)Math.abs(t.getY() - e.getY());
-        int totalDist = xDist + yDist;
+        int xDist = (int)(t.getX() - e.getX());
+        int yDist = (int)(t.getY() - e.getY());
+        int totalDist = Math.abs(xDist) + Math.abs(yDist);
 
-        float xPerc = (float)xDist / totalDist;
-        float yPerc = 1.0f - xPerc;
+        float xPerc = (float)Math.abs(xDist) / totalDist;
 
         float xSpeed = xPerc * Addition.Constants.Projectiles.GetSpeed(type);
-        float ySpeed = Addition.Constants.Projectiles.GetSpeed(t.getTowerType()) - xSpeed;
+        float ySpeed = Addition.Constants.Projectiles.GetSpeed(type) - xSpeed;
 
         if(t.getX() > e.getX()){
             xSpeed *= -1;
@@ -52,7 +52,16 @@ public class ProjectileManager {
         else if(t.getY() > e.getY()){
             ySpeed *= -1;
         }
-        projectiles.add(new Projectile(t.getX()+16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), proj_id++, type));
+
+        float arcVal = (float)Math.atan(yDist/(float)xDist);
+
+        float rotate = (float)Math.toDegrees(arcVal);
+
+        if(xDist < 0){
+            rotate += 180;
+        }
+
+        projectiles.add(new Projectile(t.getX()+16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
 
     private int getProjectileType(Tower t) {
@@ -91,10 +100,16 @@ public class ProjectileManager {
     }
 
     public void draw(Graphics g){
+        Graphics2D g2d = (Graphics2D)g;
         for(Projectile p : projectiles){
             if (p.isActive()) {
-                g.drawImage(proj_imgs[p.getProjectileType()], (int)p.getPos().x, (int)p.getPos().y, null);
+                g2d.translate(p.getPos().x, p.getPos().y);
+                g2d.rotate(Math.toRadians(p.getRotation()));
+                g2d.drawImage(proj_imgs[p.getProjectileType()], -16, -16, null);
+                g2d.rotate(-Math.toRadians(p.getRotation()));
+                g2d.translate(-p.getPos().x, -p.getPos().y);
             }
         }
+        
     }
 }

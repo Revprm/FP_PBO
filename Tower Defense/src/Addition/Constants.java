@@ -40,9 +40,9 @@ public class Constants {
 		public static int GetStartDmg(int towerType) {
 			switch (towerType) {
 				case ARCHER:
-					return 25;
+					return 1;
 				case CANNON:
-					return 15;
+					return 25;
 				case WIZARD:
 					return 5;
 			}
