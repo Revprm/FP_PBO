@@ -1,10 +1,13 @@
 package enemies;
 
 import java.awt.Rectangle;
+
+import managers.EnemyManager;
+
 import static Addition.Constants.Direction.*;
 
 public abstract class Enemy {
-
+	protected EnemyManager enemyManager;
 	protected float x, y;
 	protected Rectangle bounds;
 	protected int health;
@@ -13,12 +16,15 @@ public abstract class Enemy {
 	protected int enemyType;
 	protected int lastDir;
 	protected boolean alive = true;
+	protected int slowTickLimit = 120;
+	protected int slowTick = slowTickLimit;
 
-	public Enemy(float x, float y, int ID, int enemyType) {
+	public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager) {
 		this.x = x;
 		this.y = y;
 		this.ID = ID;
 		this.enemyType = enemyType;
+		this.enemyManager = enemyManager;
 		bounds = new Rectangle((int) x, (int) y, 32, 32);
 		lastDir = -1;
 		setStartHealth();
@@ -31,13 +37,29 @@ public abstract class Enemy {
 
 	public void hurt(int dmg) {
 		this.health -= dmg;
-		if(health <= 0){
+		if (health <= 0) {
 			alive = false;
+			enemyManager.rewardPlayer(enemyType);
 		}
 	}
 
+	public void kill() {
+		alive = false;
+		health = 0;
+	}
+	
+	public void slow() {
+		slowTick = 0;
+    }
+
 	public void move(float speed, int dir) {
 		lastDir = dir;
+
+		if(slowTick < slowTickLimit){
+			slowTick++;
+			speed*=0.25f;
+		}
+
 		switch (dir) {
 			case LEFT:
 				this.x -= speed;
@@ -97,7 +119,7 @@ public abstract class Enemy {
 		return lastDir;
 	}
 
-	public boolean isAlive(){
+	public boolean isAlive() {
 		return alive;
 	}
 

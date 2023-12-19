@@ -33,7 +33,15 @@ public class TowerManager {
 	public void addTower(Tower selectedTower, int xPos, int yPos) {
 		towers.add(new Tower(xPos, yPos, towerAmount++, selectedTower.getTowerType()));
 	}
-
+	
+	public void removeTower(Tower displayedTower) {
+		for(int i = 0; i < towers.size(); i++) {
+			if(towers.get(i).getId() == displayedTower.getId()) {
+				towers.remove(i);
+			}
+		}
+	}
+	
 	public void update() {
 		for (Tower t : towers) {
 			t.update();
@@ -82,6 +90,11 @@ public class TowerManager {
 
 	public BufferedImage[] getTowerImgs() {
 		return towerImgs;
+	}
+
+	public void reset() {
+		towers.clear();;
+		towerAmount = 0;
 	}
 
 }

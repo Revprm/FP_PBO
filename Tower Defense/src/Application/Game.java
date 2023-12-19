@@ -12,6 +12,7 @@ import inputs.KeyboardListener;
 import inputs.MyMouseListener;
 import managers.TileManager;
 import scenes.Editing;
+import scenes.GameOver;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
@@ -30,7 +31,7 @@ public class Game extends JFrame implements Runnable {
 	private Playing playing;
 	private Settings settings;
 	private Editing editing;
-
+	private GameOver gameOver;
 	private TileManager tileManager;
 	
 	public Game() {
@@ -54,6 +55,7 @@ public class Game extends JFrame implements Runnable {
 		playing = new Playing(this);
 		settings = new Settings(this);
 		editing = new Editing(this);
+		gameOver = new GameOver(this);
 
 	}
 	
@@ -161,6 +163,10 @@ public class Game extends JFrame implements Runnable {
 	
 	public TileManager getTileManager() {
 		return tileManager;
+	}
+	
+	public GameOver getGameOver() {
+		return gameOver;
 	}
 
 }

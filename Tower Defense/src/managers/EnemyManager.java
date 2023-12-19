@@ -31,9 +31,9 @@ public class EnemyManager {
 		this.start = start;
 		this.end = end;
 
-		addEnemy(SKELETON);
-		addEnemy(SLIME);
-		addEnemy(ZOMBIE);
+//		addEnemy(SKELETON);
+//		addEnemy(SLIME);
+//		addEnemy(ZOMBIE);
 		loadEnemyImgs();
 	}
 
@@ -47,11 +47,13 @@ public class EnemyManager {
 
 	public void update() {
 		for (Enemy e : enemies) {
-			if(e.isAlive()){
+			if (e.isAlive()) {
 				updateEnemyMove(e);
 			}
 		}
 	}
+
+
 
 	public void updateEnemyMove(Enemy e) {
 		if (e.getLastDir() == -1) {
@@ -64,7 +66,8 @@ public class EnemyManager {
 		if (getTileType(newX, newY) == ROAD_TILE) {
 			e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
 		} else if (isAtEnd(e)) {
-			System.out.println("Lives Lost!");
+			e.kill();
+			playing.removeOneLife();
 		} else {
 			setNewDirAndMove(e);
 		}
@@ -103,14 +106,14 @@ public class EnemyManager {
 	private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
 
 		switch (dir) {
-			case RIGHT:
-				if (xCord < 19)
-					xCord++;
-				break;
-			case DOWN:
-				if (yCord < 19)
-					yCord++;
-				break;
+		case RIGHT:
+			if (xCord < 19)
+				xCord++;
+			break;
+		case DOWN:
+			if (yCord < 19)
+				yCord++;
+			break;
 		}
 
 		e.setPos(xCord * 32, yCord * 32);
@@ -151,15 +154,15 @@ public class EnemyManager {
 		int y = start.getyCord() * 32;
 
 		switch (enemyType) {
-			case SKELETON:
-				enemies.add(new Skeleton(x, y, 0));
-				break;
-			case SLIME:
-				enemies.add(new Zombie(x, y, 0));
-				break;
-			case ZOMBIE:
-				enemies.add(new Slime(x, y, 0));
-				break;
+		case SKELETON:
+			enemies.add(new Skeleton(x, y, 0, this));
+			break;
+		case SLIME:
+			enemies.add(new Zombie(x, y, 0, this));
+			break;
+		case ZOMBIE:
+			enemies.add(new Slime(x, y, 0, this));
+			break;
 		}
 	}
 
@@ -188,5 +191,29 @@ public class EnemyManager {
 
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
+	}
+
+	public void spawnEnemy(int nextEnemy) {
+		addEnemy(nextEnemy);
+		
+	}
+
+	public int getAmountOfAliveEnemies() {
+		int size = 0;
+		for(Enemy e : enemies) {
+			if(e.isAlive()) {
+				size++;
+			}
+		}
+		return size;
+	}
+
+	public void rewardPlayer(int enemyType) {
+		playing.rewardPlayer(enemyType);
+		
+	}
+	
+	public void reset() {
+		enemies.clear();
 	}
 }

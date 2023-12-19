@@ -40,7 +40,8 @@ public class Render {
 		case EDIT:
 			game.getEditor().render(g);
 			break;
-		
+		case GAMEOVER:
+			game.getGameOver().render(g);
 		default:
 			break;
 
