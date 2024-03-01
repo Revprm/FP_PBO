@@ -3,7 +3,7 @@
 |             Nama                 |    NRP     |
 |:--------------------------------:|:----------:|
 | Revy Pramana                     | 5025221252 |
-| Ranto Bastara Hamonangan Sitorus | 5025221282 |
+| Ranto Bastara Hamonangan Sitorus | 5025221228 |
 
 
 ## RR Tower Defense
